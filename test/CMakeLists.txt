@@ -1,0 +1,16 @@
+SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${FIBP_ROOT}/testbin")
+INCLUDE_DIRECTORIES(
+  ${CMAKE_SOURCE_DIR}/core/
+  ${CMAKE_SOURCE_DIR}/core/boost-fiber/
+  ${CMAKE_CURRENT_SOURCE_DIR}
+
+  ${izenelib_INCLUDE_DIRS}
+  )
+
+CONFIGURE_FILE(
+  TestResources.h.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/TestResources.h
+  ESCAPE_QUOTES @ONLY
+  )
+
+ADD_SUBDIRECTORY(stress_test)

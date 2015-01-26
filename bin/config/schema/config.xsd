@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 (http://www.altova.com) by YF (izenesoft) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.izenesoft.com" xmlns:t="http://www.izenesoft.com" targetNamespace="http://www.izenesoft.com" elementFormDefault="qualified">
+    <xs:include schemaLocation="common.xsd"/>
+
+    <xs:simpleType name="PortType">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1025"/>
+            <xs:maxInclusive value="65535"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="FibpConfig">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="System"/>
+                <xs:element ref="Deployment"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="System">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="Resource"/>
+                <xs:element ref="WorkingDir"/>
+                <xs:element ref="LogServerConnection"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Resource">
+        <xs:complexType>
+            <xs:attribute name="path" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="WorkingDir">
+        <xs:complexType>
+            <xs:attribute name="path" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="LogServerConnection">
+        <xs:complexType>
+            <xs:attribute name="host" use="required"/>
+            <xs:attribute name="port" type="PortType" use="required"/>
+            <xs:attribute name="log_service" use="required"/>
+            <xs:attribute name="log_tag" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Deployment">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="BrokerAgent"/>
+                <xs:element ref="DistributedCommon" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="DistributedUtil" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="BrokerAgent">
+        <xs:complexType>
+            <xs:attribute name="enabletest" type="YesNoType" use="required"/>
+            <xs:attribute name="threadnum" use="required">
+                <xs:simpleType>
+                    <xs:restriction base="xs:integer">
+                        <xs:minInclusive value="1"/>
+                        <xs:maxInclusive value="100"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="port" type="PortType" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DistributedCommon">
+        <xs:complexType>
+            <xs:attribute name="username" type="xs:string" use="required"/>
+            <xs:attribute name="localinterface" type="xs:string" use="required"/>
+            <xs:attribute name="localhost" type="xs:string" use="required"/>
+            <xs:attribute name="workerport" type="PortType" use="required"/>
+            <xs:attribute name="masterport" type="PortType" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DistributedUtil">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ZooKeeper" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="ServiceDiscovery" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="DFS" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ZooKeeper">
+        <xs:complexType>
+            <xs:attribute name="disable" type="YesNoType" use="required"/>
+            <xs:attribute name="servers" type="xs:string" use="required"/>
+            <xs:attribute name="sessiontimeout" type="xs:integer" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ServiceDiscovery">
+        <xs:complexType>
+            <xs:attribute name="servers" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="DFS">
+        <xs:complexType>
+            <xs:attribute name="type" type="xs:string" use="optional"/>
+            <xs:attribute name="supportfuse" type="YesNoType" use="optional"/>
+            <xs:attribute name="mountdir" type="xs:string" use="optional"/>
+            <xs:attribute name="server" type="xs:string" use="optional"/>
+            <xs:attribute name="port" type="PortType" use="optional"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,14 @@
+headers:
+  - controllers/CommandsController.h
+  - controllers/APIController.h
+
+controllers:
+  CommandsController:
+    actions:
+      - check_alive
+      - call_services_async
+      - call_single_service_async
+  APIController:
+    actions:
+      - list_port_forward_services
+

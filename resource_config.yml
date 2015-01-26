@@ -1,0 +1,7 @@
+server: dev@izenesoft.cn
+remote_path: /data/fibp-resource
+local_path: ./package/resource
+branch: kite-2
+branch_suffix: resource
+sub_modules:
+push_sub_modules:
