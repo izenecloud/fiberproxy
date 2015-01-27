@@ -141,7 +141,7 @@ The response :
 
 #### Msgpack-RPC call
 For single rpc method, just replace the origin method with:
-</pre>
+<pre>
 call_single_service_async/your_service_name/your_rpc_method
 </pre>
 
