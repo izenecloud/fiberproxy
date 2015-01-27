@@ -26,6 +26,8 @@ static const std::string http_service_str("http");
 static const std::string rpc_service_str("rpc");
 static const std::string raw_service_str("raw");
 static const std::string dev_cluster_str("dev");
+static const std::string port_forward_key("/v1/kv/fibp-forward-port");
+
 typedef std::pair<std::string, std::string> HostPairT;
 
 static bool parseQueryServicesRsp(const std::string& json_rsp, std::vector<std::string>& services)
@@ -625,7 +627,7 @@ void FibpServiceMgr::watchPortForwardChangeFunc()
     while(!need_stop_)
     {
         std::string json_rsp;
-        bool ret = longPollingRequest(*client, "/v1/kv/fibp-forward-port", "keys", indexid, json_rsp);
+        bool ret = longPollingRequest(*client, port_forward_key, "keys", indexid, json_rsp);
         if (!ret)
         {
             boost::this_fiber::sleep_for(boost::chrono::seconds(1));
@@ -750,7 +752,7 @@ bool FibpServiceMgr::getForwardPortInfo(FibpHttpClient& client, const std::strin
     std::string& service_name, int& type)
 {
     uint32_t indexid = 0;
-    bool ret = longPollingRequest(client, "/v1/kv/fibp-forward-port/" + forwardkey, "raw", indexid, info, -1);
+    bool ret = longPollingRequest(client, port_forward_key + "/" + forwardkey, "raw", indexid, info, -1);
     if (!ret)
     {
         return false;
