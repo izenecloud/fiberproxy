@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<FibpConfig xmlns="http://www.izenesoft.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.izenesoft.com config.xsd">
+  <!-- ======== SYSTEM CONFIGURATIONS ======== -->
+  <!--
+       DESCRIPTION: Sets up system settings.
+  -->
+  <System>
+    <Resource path="@FIBP_ROOT@/package/resource"/>
+    <WorkingDir path="@FIBP_ROOT@/bin"/>
+    <LogServerConnection host="172.16.5.168" port="7000" log_service="influxlog" log_tag="dev" />
+  </System>
+
+  <Deployment>
+    <BrokerAgent threadnum="4" enabletest="y" port="18281"/>
+    <DistributedCommon username="@LOCAL_HOST_USER_NAME@" localinterface="eth0" localhost="@LOCAL_HOST_IP@" workerport="18251" masterport="18231" />
+    <DistributedUtil>
+      <ZooKeeper disable="y" servers="10.10.99.121:2181,10.10.99.122:2181,10.10.99.123:2181" sessiontimeout="5000"/>
+      <ServiceDiscovery servers="10.10.99.131:8500,10.10.99.127:8500" />
+      <DFS type="hdfs" supportfuse="n" mountdir="" server="localhost" port="9000"/>
+    </DistributedUtil>
+  </Deployment>
+</FibpConfig>
